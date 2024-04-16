@@ -13,3 +13,8 @@ pnpm dev
 # or
 bun dev
 ```
+
+## clone 한뒤 실행
+```bash
+npm install
+```
