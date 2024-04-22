@@ -1,3 +1,4 @@
+import Test from "./components/Test";
 import UserInfo from "./components/User";
 
 const user = {
@@ -11,7 +12,7 @@ const user = {
 export default function Home() {
   return (
     <div>
-      <UserInfo user={user}></UserInfo>
+      <Test />
     </div>
   );
 }
