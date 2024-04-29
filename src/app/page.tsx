@@ -1,9 +1,9 @@
-import UserInfo from "./components/UserInfo";
+import User from "./components/Users";
 
 export default function Home() {
   return (
     <div>
-      <UserInfo />
+      <User />
     </div>
   );
 }
