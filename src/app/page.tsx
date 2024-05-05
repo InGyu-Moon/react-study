@@ -1,9 +1,9 @@
-import User from "./components/Users";
+import UserInput from "./components/UserInput";
 
 export default function Home() {
   return (
     <div>
-      <User />
+      <UserInput />
     </div>
   );
 }
