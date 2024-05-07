@@ -1,6 +1,6 @@
 'use client'
 import React from 'react';
-import {useState} from 'react'
+import {useState,useEffect} from 'react'
 
 
 export default function UserInput(){
@@ -10,6 +10,25 @@ export default function UserInput(){
         password: '',
         nickname: ''
     });
+    const [allUsers, setAllUsers] = useState([]);
+    useEffect(() => {
+        getAllUsers();
+        setAllUsers([]);
+    }, []);
+
+    async function getAllUsers(){
+        try{
+            const response = await fetch("http://localhost:3000/user");
+            if(response.ok){
+                const data = await response.json();
+                setAllUsers(data.data);
+            }else{
+                throw new Error('Network response was not ok.');
+            }
+        }catch(error){
+            console.error('There was a problem with the fetch operation:', error);
+        }
+    }
 
     function dataChange(e:any){
         const { name, value } = e.target;
@@ -35,6 +54,7 @@ export default function UserInput(){
             });
             if(response.ok){
                 console.log("회원추가 성공");
+                getAllUsers();
             }else{
                 throw new Error('Network response was not ok.');
             }
@@ -59,6 +79,19 @@ export default function UserInput(){
                 <br/>
                 <button type='submit'>회원추가</button>
             </form>
+
+
+            <h3>모든 사용자 정보</h3>
+            <hr></hr>
+            {allUsers.map(user => (
+                    <div key={user._id}>
+                            Email: {user.userEmail}<br></br>
+                            NickName: {user.nickname}<br></br>
+                            JoinDate: {user.joinDate}<br></br>
+                            <hr></hr>
+                    </div>
+                ))}
+
         </div>
     );
 }
