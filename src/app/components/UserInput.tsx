@@ -1,19 +1,19 @@
 'use client'
 import React from 'react';
 import {useState,useEffect} from 'react'
+import {user} from '../types/user'
 
 
 export default function UserInput(){
 
     const [userInputData, setUserData] = useState({
-        email: '',
+        userEmail: '',
         password: '',
         nickname: ''
     });
-    const [allUsers, setAllUsers] = useState([]);
+    const [allUsers, setAllUsers] = useState<user[]>([]);
     useEffect(() => {
         getAllUsers();
-        setAllUsers([]);
     }, []);
 
     async function getAllUsers(){
@@ -47,7 +47,7 @@ export default function UserInput(){
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    userEmail: userInputData.email,
+                    userEmail: userInputData.userEmail,
                     password: userInputData.password,
                     nickname: userInputData.nickname,
                 }),
@@ -68,8 +68,8 @@ export default function UserInput(){
         <div>
             <h3>user 추가</h3>
             <form onSubmit={handleSubmit}>
-                <label htmlFor="email">Email: </label>
-                <input type="text" name="email" onChange={dataChange} required />
+                <label htmlFor="userEmail">Email: </label>
+                <input type="text" name="userEmail" onChange={dataChange} required />
                 <br/>
                 <label htmlFor="password">비밀번호: </label>
                 <input type="password" name="password" onChange={dataChange} required />
