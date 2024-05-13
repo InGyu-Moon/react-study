@@ -3,7 +3,7 @@ import React from 'react';
 import {useState,useEffect} from 'react'
 import {user} from '../types/user'
 
-
+// 수정, 삭제
 export default function UserInput(){
 
     const [userInputData, setUserData] = useState({
