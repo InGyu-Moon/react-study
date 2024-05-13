@@ -82,7 +82,7 @@ export default function UserInput(){
                 console.log("회원삭제 성공");
                 getAllUsers();
                 /**
-                 * 다시 랜더링 할때 
+                 * 다시 랜더링 할때
                  */
             }else{
                 throw new Error('Network response was not ok.');
