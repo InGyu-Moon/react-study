@@ -1,23 +1,31 @@
 'use client'
-import { useNavigate } from 'react-router-dom'; //useHistory 대신
 import React from 'react';
 import {useState} from 'react'
+import { user } from "../types/user";
 
-// 수정, 삭제
-export default function UserInput(){
+import { useNavigate, useLocation } from 'react-router-dom';
+
+interface props{
+    user:user;
+    updateSuccess:any;
+}
+
+export default function UserUpdate(){ //{user}:props
 
     const navigate = useNavigate();
 
-    const [userInputData, setUserData] = useState({
-        userEmail: '',
+    const location = useLocation();
+    const { userEmail, nickname } = location.state;
+
+    const [updateData,setUpdateData] = useState({
         password: '',
-        nickname: ''
+        nickname: nickname
     });
 
     function dataChange(e:any){
         const { name, value } = e.target;
-        setUserData({
-            ...userInputData,
+        setUpdateData({
+            ...updateData,
             [name]: value
         })
     }
@@ -26,21 +34,19 @@ export default function UserInput(){
         event.preventDefault();
         try{
             const response = await fetch('http://localhost:3000/user',{
-                method:"POST",
+                method:"PUT",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    userEmail: userInputData.userEmail,
-                    password: userInputData.password,
-                    nickname: userInputData.nickname,
-                }),
+                    userEmail: userEmail,
+                    nickname: updateData.nickname,
+                    password: updateData.password
+                })
             });
             if(response.ok){
-                console.log("회원추가 성공");
+                console.log("회원수정 성공");
                 navigate('/');
-                // window.location.href = '/';
-
             }else{
                 throw new Error('Network response was not ok.');
             }
@@ -49,16 +55,16 @@ export default function UserInput(){
         }
     }
 
-
-    
     return(
         <div>
-            <h3>사용자 추가</h3>
+            <h3>사용자 수정</h3>
             <hr/>
+
             <form onSubmit={handleSubmit}>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                     <label htmlFor="userEmail" style={{ marginLeft: '10px' , marginRight: '20px'}}>Email: </label>
-                    <input type="text" className='form-control' style={{ width: '300px' }} name="userEmail" onChange={dataChange} required />
+                    <input type="text" className='form-control' style={{ width: '300px' }} 
+                    value={userEmail} name="userEmail" onChange={dataChange} readOnly />
                 </div>
                 <br/>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -70,13 +76,14 @@ export default function UserInput(){
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                     <label htmlFor="nickname" style={{ marginRight: '10px' }}>사용자명: </label>
                     <input type="text" className='form-control' style={{width:'300px'}}
-                    name="nickname" onChange={dataChange} required />
+                    defaultValue={nickname} name="nickname" onChange={dataChange} required />
                 </div>
                 <br/>
-                <button style={{ marginLeft: '100px' }} type='submit' className='btn btn-outline-primary'>추가</button>
+                <button style={{ marginLeft: '100px' }} type='submit' className='btn btn-outline-primary'>수정</button>
                 <button onClick={()=>{navigate(-1);}} style={{ marginLeft: '10px' }} type='button' className='btn btn-outline-success'>뒤로</button>
+        
             </form>
         </div>
-    );
+        
+    )
 }
-// onClick={()=>updateUser(user.userEmail,user.nickname) }

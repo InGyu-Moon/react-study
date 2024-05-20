@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
+import "bootstrap/dist/css/bootstrap.min.css";
+import Script from "next/script";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -16,7 +19,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      { <Script src="https://unpkg.com/react-bootstrap@next/dist/react-bootstrap.min.js" crossOrigin="anonymous" />}
+      <link href="https://hangeul.pstatic.net/hangeul_static/css/maru-buri.css" rel="stylesheet"></link>
+      <style> {`
+          body {
+            font-family: 'MaruBuri';
+            margin-top: 100px;
+            margin-left: 200px;
+            margin-right: 200px;
+          }
+        `}</style>
+      {/* <body className={inter.className}>{children}</body> */}
+      <body>
+        {children}
+      </body>
     </html>
   );
 }
