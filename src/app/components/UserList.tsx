@@ -19,27 +19,6 @@ export default function UserInput(){
         // getAllUsers();
     }, []);
 
-    // let user:any = null;
-    // function getAllUsers123(){
-    //     const promise = fetch("http://localhost:3000/user")
-    //     .then((response) => response.json())
-    //     .then((data) => {
-    //         setTimeout(() => {
-    //           user = data;
-    //         }, 3000);
-    //     });
-    //     return {
-    //         read() {
-    //           if (user === null) {
-    //             throw promise;
-    //           } else {
-    //             return user;
-    //           }
-    //         }
-    //       };
-    // }
-
-
 
     async function getAllUsers(){
         try{
