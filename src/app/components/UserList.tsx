@@ -3,42 +3,37 @@ import React, { Suspense } from 'react';
 import {useState,useEffect} from 'react'
 import {user} from '../types/user'
 import { Link } from 'react-router-dom';
+import useBearStore from '../zustand/store';
 
 
 
 export default function UserInput(){
 
+    const bearStore:any = useBearStore();
+
+    const handleIncrease = () => {
+        bearStore.increaseTotalMember();
+      };
     
+      const handleDecrease = () => {
+        bearStore.decreaseTotalMember();
+      };
+
 
     const [allUsers, setAllUsers] = useState<user[]>([]);
     useEffect(() => {
-        setTimeout(()=>{
-            console.log('allUsers',allUsers);
-            getAllUsers();
-        },3000);
-        // getAllUsers();
+        // setTimeout(()=>{
+        //     console.log('allUsers',allUsers);
+        //     getAllUsers();
+        // },1000);
+        getAllUsers();
     }, []);
 
-    // let user:any = null;
-    // function getAllUsers123(){
-    //     const promise = fetch("http://localhost:3000/user")
-    //     .then((response) => response.json())
-    //     .then((data) => {
-    //         setTimeout(() => {
-    //           user = data;
-    //         }, 3000);
-    //     });
-    //     return {
-    //         read() {
-    //           if (user === null) {
-    //             throw promise;
-    //           } else {
-    //             return user;
-    //           }
-    //         }
-    //       };
-    // }
 
+    // let totalMember = bearStore.bears;
+    // useEffect(() => {
+    //     totalMember = bearStore.bears;
+    // },[bearStore.bears])
 
 
     async function getAllUsers(){
@@ -69,6 +64,7 @@ export default function UserInput(){
             });
             if(response.ok){
                 console.log("회원삭제 성공");
+                bearStore.decreaseTotalMember();
                 getAllUsers();
             }else{
                 throw new Error('Network response was not ok.');
@@ -85,13 +81,17 @@ export default function UserInput(){
     return(
         <div>
             <div style={{display: 'flex',alignItems: 'center'}}>
-                <h3 style={{ marginRight: '50px' }}>전체 사용자 정보</h3>
+                <h3 style={{ marginRight: '50px' }}>전체 사용자 정보</h3> <span>{bearStore.bears} &nbsp;&nbsp;&nbsp;</span>
                 {/* <Link href="/userInput" className='btn btn-outline-primary'>사용자 추가</Link> */}
                 <Link to="/userInput" className='btn btn-outline-primary'>사용자 추가</Link>
             </div>
+            <div>
+            <button className="btn btn-outline-info" style={{marginRight:'20px'}} onClick={handleIncrease}>Increase</button>
+            <button className="btn btn-outline-info" onClick={handleDecrease}>Decrease</button>
+            </div>
             
             <hr></hr>
-            <Suspense fallback={<h2>🌀 Loading...</h2>}>
+            {/* <Suspense fallback={<h2>🌀 Loading...</h2>}> */}
                 <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                     {allUsers.map((user,index) => (
                         <div key={user._id} style={{ flex: '0 0 calc(25% - 20px)', marginBottom: '20px', marginRight: '20px' }}>
@@ -111,7 +111,7 @@ export default function UserInput(){
                         </div>
                     ))}
                 </div>
-            </Suspense>
+            {/* </Suspense> */}
             
         </div>
     );
