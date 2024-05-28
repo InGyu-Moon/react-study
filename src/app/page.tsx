@@ -1,10 +1,12 @@
 'use client'
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import UserList from "./components/UserList";
-import UserInput from "./components/UserInput";
-import UserUpdate from "./components/UserUpdate";
+import UserList from "../components/UserList";
+import UserInput from "../components/UserInput";
+import UserUpdate from "../components/UserUpdate";
+
 
 export default function Home() {
+  
   return (
     <div>
       <Router>
@@ -17,3 +19,5 @@ export default function Home() {
     </div>
   );
 }
+
+

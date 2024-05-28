@@ -1,7 +1,7 @@
 'use client'
 import React from 'react';
 import {useState,useEffect} from 'react'
-import {user} from '../../types/user'
+import {user} from '../../../types/user'
 import UserUpdateForm from './UserUpdateForm';
 
 
