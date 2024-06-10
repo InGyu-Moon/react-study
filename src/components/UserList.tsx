@@ -2,8 +2,8 @@
 import React, { Suspense } from 'react';
 import {useState,useEffect} from 'react'
 import {user} from '../types/user'
-import { Link } from 'react-router-dom';
 import useBearStore from '../zustand/store';
+import Link from 'next/link';
 
 
 
@@ -85,8 +85,8 @@ export default function UserInput(){
         <div>
             <div style={{display: 'flex',alignItems: 'center'}}>
                 <h3 style={{ marginRight: '50px' }}>전체 사용자 정보</h3> <span>{bearStore.bears} &nbsp;&nbsp;&nbsp;</span>
-                {/* <Link href="/userInput" className='btn btn-outline-primary'>사용자 추가</Link> */}
-                <Link to="/userInput" className='btn btn-outline-primary'>사용자 추가</Link>
+                <Link href="/userInput" className='btn btn-outline-primary'>사용자 추가</Link>
+                {/* <Link to="/userInput" className='btn btn-outline-primary'>사용자 추가</Link> */}
             </div>
             <div>
             <button className="btn btn-outline-info" style={{marginRight:'20px'}} onClick={handleIncrease}>Increase</button>
@@ -105,7 +105,18 @@ export default function UserInput(){
                                     <p><b>JoinDate:</b> {user.joinDate}<br /></p>
                                 </div>
                                 <div style={{ display: 'flex', alignItems: 'center', marginLeft: '10px' }}>
-                                    <Link to="/userUpdate" state={{userEmail:user.userEmail,nickname:user.nickname}}  className='btn btn-outline-info' key={user._id}>수정</Link>
+                                    {/* <Link to="/userUpdate" state={{userEmail:user.userEmail,nickname:user.nickname}}  className='btn btn-outline-info' key={user._id}>수정</Link> */}
+                                    
+                                    <Link href={
+                                        { pathname: "/userUpdate",
+                                            query: {
+                                                userEmail: user.userEmail, nickname: user.nickname,
+                                            },
+                                        }}
+                                        className='btn btn-outline-info' key={user._id}>수정</Link>     
+                                        
+                                    <Link href={"/userUpdate/"+user.userEmail} >수정</Link>                               
+
                                     {/* <Link to={{pathname:'/userUpdate', user: user}} className='btn btn-outline-info'>수정</Link> */}
                                     <button className='btn btn-outline-danger' onClick={()=>deleteUser(user.userEmail) }style={{ marginLeft: '30px' }}>삭제</button>
                                 </div> 

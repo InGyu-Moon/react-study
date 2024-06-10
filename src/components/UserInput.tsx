@@ -10,7 +10,7 @@ export default function UserInput(){
 
     const bearStore:any = useBearStore();
     
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     // const [userInputData, setUserData] = useState({
     //     userEmail: '',
@@ -77,8 +77,8 @@ export default function UserInput(){
                     console.log("회원추가 성공");
                     await bearStore.increaseTotalMember();
                     console.log('bearStore.bears',bearStore.bears)
-                    navigate('/');
-                // window.location.href = '/';
+                    // navigate('/');
+                window.location.href = '/';
 
             }else{
                 throw new Error('Network response was not ok.');
@@ -112,7 +112,7 @@ export default function UserInput(){
                 </div>
 
                 <button style={{ marginLeft: '100px' }} type='submit' className='btn btn-outline-primary'>추가</button>
-                <button onClick={()=>{navigate(-1);}} style={{ marginLeft: '10px' }} type='button' className='btn btn-outline-success'>뒤로</button>
+                <button onClick={()=>{window.location.href = '/';}} style={{ marginLeft: '10px' }} type='button' className='btn btn-outline-success'>뒤로</button>
             </form>
 
 

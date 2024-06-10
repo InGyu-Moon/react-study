@@ -2,20 +2,30 @@
 import React from 'react';
 import {useState} from 'react'
 import { user } from "../types/user";
-
-import { useNavigate, useLocation } from 'react-router-dom';
+// import { useRouter } from 'next/router';
 
 interface props{
     user:user;
     updateSuccess:any;
 }
+interface userProps{
+    userEmail:string;
+    nickname:string;
+}
 
-export default function UserUpdate(){ //{user}:props
+export default function UserUpdate(userEmail:any, nickname:any){ //{user}:props
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
+    // const location = useLocation();
 
-    const location = useLocation();
-    const { userEmail, nickname } = location.state;
+    // const { userEmail, nickname } = user;
+    // const userEmail = user.userEmail;
+    // const nickname = user.nickname;
+
+    // const router = useRouter();
+    // const { userEmail, nickname } = router.query;
+
+    console.log(userEmail, nickname);
 
     const [updateData,setUpdateData] = useState({
         password: '',
@@ -46,7 +56,8 @@ export default function UserUpdate(){ //{user}:props
             });
             if(response.ok){
                 console.log("회원수정 성공");
-                navigate('/');
+                // navigate('/');
+                window.location.href = '/';
             }else{
                 throw new Error('Network response was not ok.');
             }
@@ -80,7 +91,7 @@ export default function UserUpdate(){ //{user}:props
                 </div>
                 <br/>
                 <button style={{ marginLeft: '100px' }} type='submit' className='btn btn-outline-primary'>수정</button>
-                <button onClick={()=>{navigate(-1);}} style={{ marginLeft: '10px' }} type='button' className='btn btn-outline-success'>뒤로</button>
+                <button onClick={()=>{window.location.href = '/';}} style={{ marginLeft: '10px' }} type='button' className='btn btn-outline-success'>뒤로</button>
         
             </form>
         </div>

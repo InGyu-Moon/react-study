@@ -9,13 +9,14 @@ export default function Home() {
   
   return (
     <div>
-      <Router>
+      {/* <Router>
         <Routes>
           <Route path="/" element={<UserList />} />
           <Route path="/userInput" element={<UserInput />} />
           <Route path="/userUpdate" element={<UserUpdate />} />
         </Routes>
-      </Router>
+      </Router> */}
+      <UserList />
     </div>
   );
 }
