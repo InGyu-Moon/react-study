@@ -1,6 +1,6 @@
-import UserInput1 from "../../components/UserInput";
-export default function UserInput() {
+import UserInput from "../../components/UserInput";
+export default function Page() {
     return (
-        <UserInput1 />
+        <UserInput />
     )
 }

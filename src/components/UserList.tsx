@@ -115,7 +115,7 @@ export default function UserInput(){
                                         }}
                                         className='btn btn-outline-info' key={user._id}>수정</Link>     
                                         
-                                    <Link href={"/userUpdate/"+user.userEmail} >수정</Link>                               
+                                    {/* <Link href={"/userUpdate/"+user.userEmail} >수정</Link>                                */}
 
                                     {/* <Link to={{pathname:'/userUpdate', user: user}} className='btn btn-outline-info'>수정</Link> */}
                                     <button className='btn btn-outline-danger' onClick={()=>deleteUser(user.userEmail) }style={{ marginLeft: '30px' }}>삭제</button>

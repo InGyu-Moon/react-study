@@ -4,28 +4,25 @@ import {useState} from 'react'
 import { user } from "../types/user";
 // import { useRouter } from 'next/router';
 
-interface props{
-    user:user;
-    updateSuccess:any;
-}
+
 interface userProps{
-    userEmail:string;
-    nickname:string;
+    userEmail:string | null;
+    nickname:string | null;
 }
 
-export default function UserUpdate(userEmail:any, nickname:any){ //{user}:props
+export default function UserUpdate(data:userProps){ //{user}:props
 
     // const navigate = useNavigate();
     // const location = useLocation();
 
     // const { userEmail, nickname } = user;
-    // const userEmail = user.userEmail;
-    // const nickname = user.nickname;
+    const userEmail = data.userEmail;
+    const nickname = data.nickname;
 
     // const router = useRouter();
     // const { userEmail, nickname } = router.query;
 
-    console.log(userEmail, nickname);
+    console.log('Component',userEmail, nickname);
 
     const [updateData,setUpdateData] = useState({
         password: '',

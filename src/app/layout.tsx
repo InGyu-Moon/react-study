@@ -19,16 +19,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      { <Script src="https://unpkg.com/react-bootstrap@next/dist/react-bootstrap.min.js" crossOrigin="anonymous" />}
+      <head>
+      {/* { <Script src="https://unpkg.com/react-bootstrap@next/dist/react-bootstrap.min.js" crossOrigin="anonymous" />} */}
       <link href="https://hangeul.pstatic.net/hangeul_static/css/maru-buri.css" rel="stylesheet"></link>
-      <style> {`
+      {/* <style> {`
           body {
             font-family: 'MaruBuri';
             margin-top: 100px;
             margin-left: 200px;
             margin-right: 200px;
           }
-        `}</style>
+        `}</style> */}
+      </head>
       {/* <body className={inter.className}>{children}</body> */}
       <body>
         {children}
