@@ -1,22 +1,16 @@
 'use client'
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Suspense } from "react";
 import UserList from "../components/UserList";
-import UserInput from "../components/UserInput";
-import UserUpdate from "../components/UserUpdate";
+import Loading from "./loading";
 
 
 export default function Home() {
   
   return (
     <div>
-      {/* <Router>
-        <Routes>
-          <Route path="/" element={<UserList />} />
-          <Route path="/userInput" element={<UserInput />} />
-          <Route path="/userUpdate" element={<UserUpdate />} />
-        </Routes>
-      </Router> */}
-      <UserList />
+      <Suspense fallback={<Loading/>}>
+        <UserList />
+      </Suspense>
     </div>
   );
 }

@@ -9,6 +9,12 @@ import Link from 'next/link';
 
 export default function UserInput(){
 
+    getAllUsers();
+
+    // useEffect(() => {
+    //     getAllUsers();
+    // },[])
+
     const bearStore:any = useBearStore();
 
     const handleIncrease = () => {
@@ -21,13 +27,8 @@ export default function UserInput(){
 
 
     const [allUsers, setAllUsers] = useState<user[]>([]);
-    useEffect(() => {
-        // setTimeout(()=>{
-        //     console.log('allUsers',allUsers);
-        //     getAllUsers();
-        // },1000);
-        getAllUsers();
-    }, []);
+
+    
 
 
 
@@ -77,24 +78,22 @@ export default function UserInput(){
         }
     }
 
-    if (allUsers.length === 0) {
-        return <h2>🌀 Loading...</h2>;
-    }
+    // if (allUsers.length === 0) {
+    //     return <h2>🌀 Loading...</h2>;
+    // }
     
     return(
         <div>
             <div style={{display: 'flex',alignItems: 'center'}}>
                 <h3 style={{ marginRight: '50px' }}>전체 사용자 정보</h3> <span>{bearStore.bears} &nbsp;&nbsp;&nbsp;</span>
                 <Link href="/userInput" className='btn btn-outline-primary'>사용자 추가</Link>
-                {/* <Link to="/userInput" className='btn btn-outline-primary'>사용자 추가</Link> */}
             </div>
-            <div>
+            {/* <div>
             <button className="btn btn-outline-info" style={{marginRight:'20px'}} onClick={handleIncrease}>Increase</button>
             <button className="btn btn-outline-info" onClick={handleDecrease}>Decrease</button>
-            </div>
+            </div> */}
             
             <hr></hr>
-            {/* <Suspense fallback={<h2>🌀 Loading...</h2>}> */}
                 <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                     {allUsers.map((user,index) => (
                         <div key={user._id} style={{ flex: '0 0 calc(25% - 20px)', marginBottom: '20px', marginRight: '20px' }}>
@@ -105,8 +104,6 @@ export default function UserInput(){
                                     <p><b>JoinDate:</b> {user.joinDate}<br /></p>
                                 </div>
                                 <div style={{ display: 'flex', alignItems: 'center', marginLeft: '10px' }}>
-                                    {/* <Link to="/userUpdate" state={{userEmail:user.userEmail,nickname:user.nickname}}  className='btn btn-outline-info' key={user._id}>수정</Link> */}
-                                    
                                     <Link href={
                                         { pathname: "/userUpdate",
                                             query: {
@@ -114,18 +111,16 @@ export default function UserInput(){
                                             },
                                         }}
                                         className='btn btn-outline-info' key={user._id}>수정</Link>     
-                                        
-                                    {/* <Link href={"/userUpdate/"+user.userEmail} >수정</Link>                                */}
-
-                                    {/* <Link to={{pathname:'/userUpdate', user: user}} className='btn btn-outline-info'>수정</Link> */}
-                                    <button className='btn btn-outline-danger' onClick={()=>deleteUser(user.userEmail) }style={{ marginLeft: '30px' }}>삭제</button>
+                                    {/* <button className='btn btn-outline-danger' onClick={()=>deleteUser(user.userEmail) }style={{ marginLeft: '30px' }}>삭제</button> */}
+                                    <Link href={
+                                        { pathname: `/userDelete/${user.userEmail}`,
+                                        }} className='btn btn-outline-danger' key={user._id}>삭제</Link>
                                 </div> 
                             </div>
                         <hr/>
                         </div>
                     ))}
                 </div>
-            {/* </Suspense> */}
             
         </div>
     );

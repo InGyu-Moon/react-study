@@ -1,7 +1,7 @@
 'use client'
 import React from 'react';
 import {useState} from 'react'
-import { user } from "../../../types/user";
+import { user } from "../../types/user";
 
 interface props{
     user:user;
