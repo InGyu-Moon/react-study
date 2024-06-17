@@ -15,22 +15,17 @@ export default function UserListReactQuery() {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-            console.log("@@@",data);
-
             // bearStore.updateBears(data.data.length);
-            return response.json();
+            const userList = await response.json();
+            bearStore.updateBears(userList.data.length);
+            return userList;
         },
         
     });  
 
       if (isLoading || isPending) {
         console.log('loading')
-        return <div>☆☆☆Loading...☆☆☆</div>
-      }
-
-      if(data){
-        // bearStore.updateBears(data.data.length);
-        console.log(data.data.length);
+        return <div><h1>☆☆☆Loading...☆☆☆</h1></div>
       }
 
       if (error){
@@ -45,10 +40,6 @@ export default function UserListReactQuery() {
                 <h3 style={{ marginRight: '50px' }}>전체 사용자 정보</h3> <span>{bearStore.bears} &nbsp;&nbsp;&nbsp;</span>
                 <Link href="/userInput" className='btn btn-outline-primary'>사용자 추가</Link>
             </div>
-            {/* <div>
-            <button className="btn btn-outline-info" style={{marginRight:'20px'}} onClick={handleIncrease}>Increase</button>
-            <button className="btn btn-outline-info" onClick={handleDecrease}>Decrease</button>
-            </div> */}
             
             <hr></hr>
                 <div style={{ display: 'flex', flexWrap: 'wrap' }}>
@@ -68,7 +59,6 @@ export default function UserListReactQuery() {
                                             },
                                         }}
                                         className='btn btn-outline-info' key={user._id}>수정</Link>     
-                                    {/* <button className='btn btn-outline-danger' onClick={()=>deleteUser(user.userEmail) }style={{ marginLeft: '30px' }}>삭제</button> */}
                                     <Link href={
                                         { pathname: `/userDelete/${user.userEmail}`,
                                         }} className='btn btn-outline-danger' key={user._id}>삭제</Link>
