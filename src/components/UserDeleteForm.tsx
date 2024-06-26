@@ -1,11 +1,18 @@
 'use client'
 // import {} from "next/navigation"
 import { useForm } from 'react-hook-form';
+import useBearStore from '../zustand/store';
+import { useRouter } from 'next/navigation';
 interface props{
     userEmail:string
 }
 
 export default function UserDeleteForm(userEmail:props){
+
+    const router = useRouter();
+
+    const token = useBearStore((state) => state.token);
+
     const email = decodeURIComponent(userEmail.userEmail);
 
     const {
@@ -57,6 +64,7 @@ export default function UserDeleteForm(userEmail:props){
                 method:"DELETE",
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": token,
                 },
                     body: JSON.stringify({
                         userEmail: userEmail,
@@ -64,8 +72,7 @@ export default function UserDeleteForm(userEmail:props){
             });
             if(response.ok){
                     console.log(userEmail,"회원삭제 성공");
-                    window.location.href = '/';
-
+                    router.push('/');
             }else{
                 throw new Error('Network response was not ok.');
             }
@@ -74,17 +81,61 @@ export default function UserDeleteForm(userEmail:props){
         }
     }
 
+    function decodeJWT(token:string) {
+        // '.'을 기준으로 토큰을 분할합니다.
+        if(token === null || token === undefined || token === ''){
+            return '';
+        }
+        const [header, payload, signature] = token.split('.');
+        
+        // Base64로 인코딩된 payload를 디코딩합니다.
+        const decodedPayload = JSON.parse(atob(payload));
+      
+        return decodedPayload;
+    }
+
+    function checkToken(token:string){
+        const loginUserEmail = decodeJWT(token).userEmail;
+
+        if(token === null || token === undefined || token === ''){
+            return false;
+        }
+
+        if(loginUserEmail===email){
+            return true;
+        }else{
+            return true;
+        }
+    }
+    
+
+
+
     return(
         <div>
-            <h1>회원삭제</h1>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                Email: <input type='text' value={email} readOnly
-                {...register('userEmail', { required: true })}/><br/>
-                PassWord: <input type='password' 
-                {...register('password', { required: true })}/> <br/>
-                <button style={{ marginLeft: '100px' }} type='submit' className='btn btn-outline-primary'>삭제</button>
-                <button onClick={()=>{window.location.href = '/';}} style={{ marginLeft: '10px' }} type='button' className='btn btn-outline-success'>뒤로</button>
-            </form>
+            <script>
+                console.log(checkToken(token));
+            </script>
+            {checkToken(token) ? (
+                <>
+                <h1>{decodeJWT(token).nickname}님 회원삭제</h1>
+                <br/>
+                <button onClick={()=>{router.push('/');}} style={{ marginLeft: '10px' }} type='button' className='btn btn-outline-success'>뒤로</button>
+                <button style={{ marginLeft: '10px' }} className='btn btn-outline-danger' onClick={()=>{deleteUser(email)}}>삭제</button>
+                </>
+            ) : (
+                <>
+                <h1>회원삭제</h1>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    Email: <input type='text' value={email} readOnly
+                    {...register('userEmail', { required: true })}/><br/>
+                    PassWord: <input type='password' 
+                    {...register('password', { required: true })}/> <br/>
+                    <button style={{ marginLeft: '100px' }} type='submit' className='btn btn-outline-primary'>삭제</button>
+                    <button onClick={()=>{router.push('/');}} style={{ marginLeft: '10px' }} type='button' className='btn btn-outline-success'>뒤로</button>
+                </form>
+                </>
+            )}
         </div>
     )
 }

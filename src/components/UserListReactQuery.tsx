@@ -6,25 +6,35 @@ import Link from 'next/link';
 
 export default function UserListReactQuery() {
 
-    const bearStore:any = useBearStore();
+
+    const store:any = useBearStore();
+    console.log(store);
+    console.log("=== user list ===");
+    console.log("token: ",store.token);
 
     const { isLoading, isPending, error, data } = useQuery({
         queryKey: ['repoData'],
         queryFn: async () => {
-            const response = await fetch('http://localhost:3000/user');
+            const response = await fetch('http://localhost:3000/user',{
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': store.token,
+                },
+            });
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
             // bearStore.updateBears(data.data.length);
             const userList = await response.json();
-            bearStore.updateBears(userList.data.length);
+            store.updateBears(userList.data.length);
             return userList;
         },
         
     });  
 
       if (isLoading || isPending) {
-        console.log('loading')
+        console.log('☆☆☆Loading...☆☆☆')
         return <div><h1>☆☆☆Loading...☆☆☆</h1></div>
       }
 
@@ -36,9 +46,17 @@ export default function UserListReactQuery() {
 
       return(
         <div>
+
+        <h3 style={{ marginRight: '50px' }}>전체 사용자 정보</h3> <span>{store.bears} &nbsp;&nbsp;&nbsp;</span>
+
             <div style={{display: 'flex',alignItems: 'center'}}>
-                <h3 style={{ marginRight: '50px' }}>전체 사용자 정보</h3> <span>{bearStore.bears} &nbsp;&nbsp;&nbsp;</span>
-                <Link href="/userInput" className='btn btn-outline-primary'>사용자 추가</Link>
+                {/* <Link href="/login" style={{marginLeft:'20px'}} className='btn btn-outline-success'>로그인</Link> */}
+                {store.token === '' ? (
+                    <Link href="/login" style={{marginLeft:'20px'}} className='btn btn-outline-success'>로그인</Link>
+                ) : (
+                    <button style={{marginLeft:'20px'}} className='btn btn-outline-success' onClick={store.removeToken} >로그아웃</button>
+                    // <Link href="/logout" style={{marginLeft:'20px'}} className='btn btn-outline-success'>로그아웃</Link>
+                )}
             </div>
             
             <hr></hr>
@@ -68,7 +86,6 @@ export default function UserListReactQuery() {
                         </div>
                     ))}
                 </div>
-            
         </div>
       )
 

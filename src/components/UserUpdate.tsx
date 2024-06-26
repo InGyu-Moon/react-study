@@ -2,6 +2,8 @@
 import React from 'react';
 import {useState} from 'react'
 import { user } from "../types/user";
+import useBearStore from '../zustand/store';
+import { stat } from 'fs';
 // import { useRouter } from 'next/router';
 
 
@@ -12,15 +14,11 @@ interface userProps{
 
 export default function UserUpdate(data:userProps){ //{user}:props
 
-    // const navigate = useNavigate();
-    // const location = useLocation();
+    const token = useBearStore((state) => state.token);
 
-    // const { userEmail, nickname } = user;
+    
     const userEmail = data.userEmail;
     const nickname = data.nickname;
-
-    // const router = useRouter();
-    // const { userEmail, nickname } = router.query;
 
     console.log('Component',userEmail, nickname);
 
@@ -44,6 +42,7 @@ export default function UserUpdate(data:userProps){ //{user}:props
                 method:"PUT",
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": token,
                 },
                 body: JSON.stringify({
                     userEmail: userEmail,
